@@ -9,7 +9,7 @@
       <li>五</li>
       <li>六</li>
     </ul>
-    <CalendarMonth/>
+    <CalendarMonth :activeDate="activeDate" @select="changeDate"/>
   </div>
 </template>
 
@@ -25,18 +25,39 @@ export default {
   mixins: [mixin],
   data() {
     return {
-      // dattInstance: {
-      // }
+      // 当前时间
+      activeDate: ""
     };
   },
+  props: {
+    date: {
+      type: String,
+      required: true
+    }
+  },
+
   model: {
     prop: "date",
     event: "change"
   },
   created() {
-    console.log(this.today, "====today");
+    // 默认是今天
+    this.activeDate = this.today;
   },
-  methods: {}
+  methods: {
+    changeDate(date) {
+      this.activeDate = date;
+      this.$emit("change", this.activeDate);
+      // console.log(this.activeDate, "activeDate======activeDate");
+    }
+  },
+  watch: {
+    date(val, oldVal) {
+
+
+      console.log(val, oldVal, "=======oldVal");
+    }
+  }
 };
 </script>
 

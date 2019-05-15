@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h1>日历</h1>
-    <Calendar v-model="today"/>
+    <Calendar v-model="today" @change="changeDate"/>
   </div>
 </template>
 
@@ -18,6 +18,11 @@ export default {
   components: {
     Test,
     Calendar
+  },
+  methods: {
+    changeDate() {
+      // console.log(this.today, "=====today");
+    }
   }
 };
 </script>

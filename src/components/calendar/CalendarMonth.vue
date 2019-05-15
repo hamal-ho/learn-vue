@@ -1,16 +1,24 @@
 <template>
   <div class="calendar-month">
-    <CalendarMonthDay v-for="item in dates" :key="item" :day="item"/>
+    <CalendarMonthDay
+      @select="$emit('select', $event)"
+      :activeDate="activeDate"
+      v-for="item in dates"
+      :key="item"
+      :day="item"
+    />
   </div>
 </template>
 <script>
 import moment from "moment";
 import CalendarMonthDay from "./CalendarMonthDay";
+import mixin from "./calendar-mixin";
 
 export default {
   components: {
     CalendarMonthDay
   },
+  mixins: [mixin],
   data() {
     return {
       // 日期数据
@@ -21,6 +29,10 @@ export default {
     startWeekDay: {
       type: String,
       default: "Sunday"
+    },
+    activeDate: {
+      type: String,
+      required: true
     }
   },
 
@@ -28,6 +40,7 @@ export default {
     this.initDates(moment());
   },
   methods: {
+    // 初始化时间
     initDates(date) {
       // 当前月
       const currentDate = moment(date);
